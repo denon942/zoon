@@ -186,7 +186,7 @@ export default new Vuex.Store({
             })
         } else {
             // User not logged in or has just logged out.
-            router.push('/')
+            //router.push('/')
         }
       })
     },
