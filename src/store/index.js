@@ -164,6 +164,7 @@ export default new Vuex.Store({
             // ドキュメントIDをユーザIDとしているのでユーザIDを持ってきてそこからフィールド取り出し
             firebase.firestore().collection('users').doc(user.uid).get().then( doc => {
                 console.log(doc.data())
+                state.user_id = user.uid
                 // ユーザアイコン
                 state.user_image = doc.data().user_image
                 // メールアドレス
