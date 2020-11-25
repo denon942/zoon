@@ -13,7 +13,8 @@
                 <!-- チャット履歴 -->
                 <v-card 
                     class="white display-1 overflow-y-auto" max-height="585"
-                    tile elevation="0">
+                    tile elevation="0"
+                    min-height="585">
                     <v-card-text
                         v-for="(item,index) in chat"
                         :key="index"
@@ -35,7 +36,7 @@
                         <v-form>
                             <v-container class="pa-0 ma-0">
                                 <v-text-field
-                                    v-model="message"
+                                    v-model="coment"
                                     outlined
                                     clearable
                                     label="メッセージを入力"
@@ -48,73 +49,18 @@
 
                     <!-- 別画面で表示ボタン -->
                     <v-col cols="auto" class="ma-0 pa-0 pl-2">
-                        <v-tooltip top>
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn 
-                                height="56"
-                                color="primary"
-                                dark
-                                v-bind="attrs"
-                                v-on="on"
-                                >
-                                <v-icon>mdi-open-in-new</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>別画面で表示</span>
-                        </v-tooltip>
+                        <v-btn 
+                            height="56"
+                            color="primary"
+                            dark
+                            @click="send"
+                        >
+                            <v-icon>mdi-send</v-icon>
+                        </v-btn>
                     </v-col>
                 </v-row>
             </v-col>
         </v-row>
-
-        <!-- 追記モーダルチャット -->
-        <v-overlay
-                :opacity="opacity"
-                :value="overlay"
-            >
-                <v-row class="ma-0 pa-0" align="end">
-                    <v-col cols="auto">
-                        <v-btn
-                            color="orange lighten-2"
-                            @click="overlay = false"
-                            tile
-                        >
-                            CLOSE
-                        </v-btn>
-                        <v-card class="white display-1 overflow-y-auto" max-height="470" height="470" min-width="375" max-width="375" elevation="0" tile>
-                            <v-card-text
-                                v-for="(item,index) in chat"
-                                :key="index"
-                                :index="index"
-                                class="black--text"
-                            >
-                                {{ item.name }}:
-                                <v-card-text
-                                    class="title pt-0 ma-0">
-                                    {{item.content}}
-                                </v-card-text>
-                            </v-card-text>
-                        </v-card>
-
-                        <v-card class="display-1 py-2 pl-5 ma-0" outlined max-height="60" elevation="0">
-                            <v-row class="ma-0 pa-0" justify="end">
-                                <v-col cols="10" class="ma-0 pa-0">
-                                    <v-text-field
-                                        label="Message"
-                                        class="ma-0 black--text"
-                                        v-model="coment"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="2" class="ma-0 pa-0 py-1">
-                                    <v-btn class="pa-0 ma-0 ml-1" tile large color="teal" icon @click="send">
-                                        <v-icon class="pa-0 ma-0">mdi-send</v-icon>
-                                    </v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-overlay>
     </v-container>
 </template>
 <script>
@@ -172,7 +118,6 @@ export default {
         firebase.firestore().collection('room').doc('001').collection('comments').onSnapshot(() => {
             this.getChats()
         })
-        
     },
     computed:{
         user_id:{
