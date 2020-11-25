@@ -61,6 +61,39 @@
                 </v-row>
             </v-col>
         </v-row>
+        <v-footer
+            dark
+            padless
+        >
+            <v-card
+                class="flex"
+                flat
+                tile
+                min-height="122"
+            >
+            <v-card-title class="teal">
+                <strong class="subheading">Zoon!</strong>
+
+                <v-spacer></v-spacer>
+
+                <v-btn
+                    v-for="icon in icons"
+                    :key="icon"
+                    class="mx-4"
+                    dark
+                    icon
+                >
+                <v-icon size="24px">
+                    {{ icon }}
+                </v-icon>
+                </v-btn>
+            </v-card-title>
+
+            <v-card-text class="py-2 white--text text-center">
+                {{ new Date().getFullYear() }} — <strong>Zoon</strong>
+            </v-card-text>
+            </v-card>
+        </v-footer>
     </v-container>
 </template>
 <script>
@@ -73,7 +106,13 @@ export default {
             chat_ire:[],
             opacity: 0.4,
             coment:"",
-            name:""
+            name:"",
+            icons: [
+                'mdi-home',
+                'mdi-email',
+                'mdi-calendar',
+                'mdi-delete',
+            ],
         }
     },
     methods: {
