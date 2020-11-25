@@ -133,16 +133,9 @@ export default {
         }
     },
     mounted() {
-        firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            // User logged in already or has just logged in.
-            // ユーザーIDの取得
-            // console.log(user.uid);
-            // this.user_id = user.uid
-            // ドキュメントIDをユーザIDとしているのでユーザIDを持ってきてそこからフィールド取り出し
+        firebase.firestore().collection('room').doc('001').collection('comments').onSnapshot(() => {
             this.getChats()
-        }
-      })
+        })
         
     },
     computed:{
