@@ -1,36 +1,72 @@
 <template>
     <v-container class="ma-0 pa-0" fluid>
         <v-row justify="center" class="ma-0 pa-0 mt-3">
+            <!-- ビデオ表示領域 -->
             <v-col cols="7" class="ma-0 pa-0">
-                <v-card height="650" tile>
+                <v-card height="650" tile elevation="1" class="grey">
                     VIDEO
                 </v-card>
             </v-col>
-            <v-col cols="4" class="ma-0 pa-0">
-                <v-card  height="650" tile elevation="2">
-                    <v-card  height="560" tile elevation="0">
-                    
-                    </v-card>
-                   
-                    <v-form>
-                        <v-container >
-                            <v-row>
-                                <v-col>
-                                    <v-text-field
-                                        v-model="message"
-                                        outlined
-                                        clearable
-                                        label="メッセージを入力"
-                                        type="text"
-                                    >
-                                    </v-text-field>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-form>
+            
+            <!-- チャット表示領域 -->
+            <v-col cols="4" class="ma-1 pa-0">
+                <!-- チャット履歴 -->
+                <v-card 
+                    class="white display-1 overflow-y-auto" max-height="585"
+                    tile elevation="0">
+                    <v-card-text
+                        v-for="(item,index) in chat"
+                        :key="index"
+                        :index="index"
+                        class="black--text"
+                    >
+                        {{ item.name }}:
+                        <v-card-text
+                            class="title pt-0 ma-0">
+                            {{item.content}}
+                        </v-card-text>
+                    </v-card-text>
                 </v-card>
+
+                <!-- 入力領域 -->
+                <v-row justify="center" class="ma-0 pa-0 mt-2">
+                    <!-- テキストボックス -->
+                    <v-col cols="9" class="ma-0 pa-0" elevation="0">
+                        <v-form>
+                            <v-container class="pa-0 ma-0">
+                                <v-text-field
+                                    v-model="message"
+                                    outlined
+                                    clearable
+                                    label="メッセージを入力"
+                                    type="text"
+                                >
+                                </v-text-field>
+                            </v-container>
+                        </v-form>
+                    </v-col>
+
+                    <!-- 別画面で表示ボタン -->
+                    <v-col cols="auto" class="ma-0 pa-0 pl-2">
+                        <v-tooltip top>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn 
+                                height="56"
+                                color="primary"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                                >
+                                <v-icon>mdi-open-in-new</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>別画面で表示</span>
+                        </v-tooltip>
+                    </v-col>
+                </v-row>
             </v-col>
         </v-row>
+
         <!-- 追記モーダルチャット -->
         <v-overlay
                 :opacity="opacity"
