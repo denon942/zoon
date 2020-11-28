@@ -150,7 +150,7 @@ export default new Vuex.Store({
           array['email'],
           array['password'])
       .then(()=>{
-          router.push('/chat')
+          router.push('/mypage')
       })
     },
     //ログインチェック
@@ -187,7 +187,7 @@ export default new Vuex.Store({
             })
         } else {
             // User not logged in or has just logged out.
-            //router.push('/')
+            router.push('/')
         }
       })
     },

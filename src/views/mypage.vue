@@ -48,7 +48,7 @@
                                         outlined
                                         large
                                         color="error"
-                                        to="./"
+                                        @click="logout"
                                         class="mb-5"
                                         width="150"
                                     >
@@ -68,11 +68,30 @@
 <script>
     export default {
         data() {
-        return {
-            //ユーザーの名前    
-            user_fname:"たろう",
-            size:"display-2",
-        }
-    },
+            return {
+                size:"display-2",
+            }
+        },
+        computed:{
+            user_id:{
+                get(){
+                    return this.$store.getters.user_id
+                },
+                set(value){
+                    return this.$store.commit('set_user_id',value)
+                }
+            },
+            user_fname(){
+                return this.$store.getters.user_fname
+            },
+        },
+        methods:{
+            logout(){
+                this.$store.commit('logout')
+            }
+        },
+        created() {
+            this.$store.commit('onAuthStateChanged')
+        },
     }
 </script>
