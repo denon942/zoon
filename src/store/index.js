@@ -127,15 +127,7 @@ export default new Vuex.Store({
                   firebase.firestore().collection("users").doc(state.user_id)
                   .set(array)
                   .then(function () {
-                      // 正常にデータ保存できた時の処理
-                      console.log('success')
-                      firebase.firestore().collection("judge").doc(state.user_id)
-                      .set({judge:0})
-                      .then(function () {
-                          // 正常にデータ保存できた時の処理
-                          console.log('success')
-                          router.push('/chat')
-                      })
+                      router.push('/mypage')
                   })
               } else {
                   // User not logged in or has just logged out.

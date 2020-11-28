@@ -82,6 +82,7 @@
                     class="mx-4"
                     dark
                     icon
+                    to="/mypage"
                 >
                 <v-icon size="24px">
                     {{ icon }}
@@ -109,9 +110,6 @@ export default {
             name:"",
             icons: [
                 'mdi-home',
-                'mdi-email',
-                'mdi-calendar',
-                'mdi-delete',
             ],
         }
     },
