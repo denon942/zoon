@@ -10,7 +10,7 @@
         <v-col cols="6" style="padding: 20px;">
             <!--時計かなんかのアイコン-->
             <p class="subheading font-weight-regular">指定時間以上何も作業がなければ通知を飛ばし、緊張感を維持</p>
-        </v-col>+
+        </v-col>
         <v-col cols="6" style="padding: 20px;">
             <!--ログとかメモっぽいアイコン-->
             <p class="subheading font-weight-regular">簡単な在席・作業管理で対面と同様の環境を実現する</p>
