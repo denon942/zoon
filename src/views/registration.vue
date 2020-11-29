@@ -2,7 +2,6 @@
 <v-container class="ma-0 pa-0" fluid>
     <v-layout class="ma-0 pa-0" wrap>
         <v-flex xs12 lg12>
-
             <v-row justify="center" class="ma-0 pa-0" style="background-color: #F6F6F6">
                 <v-col cols="auto">
                     <v-row justify="center" class="ma-0 pa-0">
@@ -22,6 +21,13 @@
                             <Regist v-if="tab == 1" />
                         </v-row>
                     </v-card>
+                    <v-row justify="end">
+                        <v-col cols="auto">
+                            <v-btn to="/" elevation="0">
+                                ▲ホームへ
+                            </v-btn>
+                        </v-col>
+                    </v-row>
                 </v-col>
             </v-row>
         </v-flex>
