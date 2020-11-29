@@ -51,14 +51,6 @@
         <v-card class="flex" flat tile min-height="122">
             <v-card-title class="teal">
                 <strong class="subheading">Zoon!</strong>
-
-                <v-spacer></v-spacer>
-
-                <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon to="/mypage">
-                    <v-icon size="24px">
-                        {{ icon }}
-                    </v-icon>
-                </v-btn>
             </v-card-title>
 
             <v-card-text class="py-2 white--text text-center">

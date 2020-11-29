@@ -76,6 +76,9 @@ export default {
     data() {
         return {
             size: "display-2",
+            icons: [
+                'mdi-home',
+            ],
         }
     },
     computed: {

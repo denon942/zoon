@@ -87,20 +87,6 @@ export default {
             this.array['email'] = this.mailaddress
             this.array['password'] = this.password
             this.$store.commit('user_login', this.array)
-
-            // if (this.mailaddress === '' || this.password === '') return
-            // firebase.auth().signInWithEmailAndPassword(this.mailaddress, this.password)
-            // .then(()=>{
-            //     this.mailaddress = '';
-            //     this.password = '';
-            // })
-            // .catch(function(error) {
-            //     // Handle Errors here.
-            //     var errorCode = error.code;
-            //     var errorMessage = error.message;
-            //     console.log(errorCode);
-            //     console.log(errorMessage);
-            // });
         },
         // モーダルを閉じる
         close() {
