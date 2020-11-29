@@ -11,7 +11,7 @@
                         <v-text-field :type="showPassword ? 'text' : 'password'" prepend-icon="mdi-lock" v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword = !showPassword" v-model="password" :rules="registpassRules" counter label="パスワード" hint="パスワードは8字以上20字以下にしてください。" required />
                         <!-- ログインボタン -->
                         <v-row justify="center" align="center" class="ma-0 pa-0 mt-2">
-                            <v-btn dark style="background-color: #83B590" outlined rounded :disabled="!valid" color="blue" class="mr-4 white--text mb-5" width="120">
+                            <v-btn dark style="background-color: #83B590" outlined rounded :disabled="!valid" color="blue" class="mr-4 white--text mb-5" width="120" @click="login">
                                 ログイン
                             </v-btn>
                         </v-row>
@@ -50,11 +50,13 @@ export default {
         }
     },
     methods: {
-        signUp: async function () {
+        login() {
+            if (this.mailaddress === '' || this.password === '') return
+            this.loading = true
             this.array['email'] = this.mailaddress
             this.array['password'] = this.password
-            await this.$store.commit('RegistUser', this.array)
-        }
+            this.$store.commit('user_login', this.array)
+        },
     },
 }
 </script>
