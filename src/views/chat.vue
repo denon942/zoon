@@ -1,146 +1,137 @@
 <template>
-    <v-container class="ma-0 pa-0" fluid>
-        <v-row justify="center" class="ma-0 pa-0 mt-3">
-            <v-col cols="7" class="ma-0 pa-0">
-                <v-card class="indigo lighten-4 white--text" height="650" tile>
-                    VIDEO
-                </v-card>
-            </v-col>
-            <v-col cols="4" class="ma-0 pa-0">
-                <v-card class="blue" height="650" tile elevation="2">
-                    <v-btn
-                        elevation="2"
-                        text
-                        class="red"
-                        @click="change"
-                        >CHAT</v-btn>
-                </v-card>
-            </v-col>
-        </v-row>
-        <!-- 追記モーダルチャット -->
-        <v-overlay
-                :opacity="opacity"
-                :value="overlay"
-            >
-                <v-row class="ma-0 pa-0" align="end">
-                    <v-col cols="auto">
-                        <v-btn
-                            color="orange lighten-2"
-                            @click="overlay = false"
-                            tile
-                        >
-                            CLOSE
-                        </v-btn>
-                        <v-card class="white display-1 overflow-y-auto" max-height="470" height="470" min-width="375" max-width="375" elevation="0" tile>
-                            <v-card-text
-                                v-for="(item,index) in chat"
-                                :key="index"
-                                :index="index"
-                                class="black--text"
-                            >
-                                {{ item.name }}:
-                                <v-card-text
-                                    class="title pt-0 ma-0">
-                                    {{item.content}}
-                                </v-card-text>
-                            </v-card-text>
-                        </v-card>
+<v-container class="ma-0 pa-0" fluid>
+    <v-row justify="center" class="ma-0 pa-0 mt-3">
+        <!-- ビデオ表示領域 -->
+        <v-col cols="7" class="ma-0 pa-0">
+            <v-card height="650" tile elevation="1" class="grey">
+                VIDEO
+            </v-card>
+        </v-col>
 
-                        <v-card class="display-1 py-2 pl-5 ma-0" outlined max-height="60" elevation="0">
-                            <v-row class="ma-0 pa-0" justify="end">
-                                <v-col cols="10" class="ma-0 pa-0">
-                                    <v-text-field
-                                        label="Message"
-                                        class="ma-0 black--text"
-                                        v-model="coment"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="2" class="ma-0 pa-0 py-1">
-                                    <v-btn class="pa-0 ma-0 ml-1" tile large color="teal" icon @click="send">
-                                        <v-icon class="pa-0 ma-0">mdi-send</v-icon>
-                                    </v-btn>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-overlay>
-    </v-container>
+        <!-- チャット表示領域 -->
+        <v-col cols="4" class="ma-1 pa-0">
+            <!-- チャット履歴 -->
+            <v-card class="white display-1 overflow-y-auto" max-height="585" tile elevation="0" min-height="585">
+                <v-card-text v-for="(item,index) in chat" :key="index" :index="index" class="black--text">
+                    {{ item.name }}:
+                    <v-card-text class="title pt-0 ma-0">
+                        {{item.content}}
+                    </v-card-text>
+                </v-card-text>
+            </v-card>
+
+            <!-- 入力領域 -->
+            <v-row justify="center" class="ma-0 pa-0 mt-2">
+                <!-- テキストボックス -->
+                <v-col cols="9" class="ma-0 pa-0" elevation="0">
+                    <v-form>
+                        <v-container class="pa-0 ma-0">
+                            <v-text-field v-model="coment" outlined clearable label="メッセージを入力" type="text">
+                            </v-text-field>
+                        </v-container>
+                    </v-form>
+                </v-col>
+
+                <!-- 別画面で表示ボタン -->
+                <v-col cols="auto" class="ma-0 pa-0 pl-2">
+                    <v-btn height="56" color="primary" dark @click="send">
+                        <v-icon>mdi-send</v-icon>
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </v-col>
+    </v-row>
+    <v-footer dark padless>
+        <v-card class="flex" flat tile min-height="122">
+            <v-card-title class="teal">
+                <strong class="subheading">Zoon!</strong>
+
+                <v-spacer></v-spacer>
+
+                <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon to="/mypage">
+                    <v-icon size="24px">
+                        {{ icon }}
+                    </v-icon>
+                </v-btn>
+            </v-card-title>
+
+            <v-card-text class="py-2 white--text text-center">
+                {{ new Date().getFullYear() }} — <strong>Zoon</strong>
+            </v-card-text>
+        </v-card>
+    </v-footer>
+</v-container>
 </template>
+
 <script>
 import firebase from 'firebase'
 export default {
-    data(){
-        return{
-            overlay:false,
-            chat:[],
-            chat_ire:[],
+    data() {
+        return {
+            overlay: false,
+            chat: [],
+            chat_ire: [],
             opacity: 0.4,
-            coment:"",
-            name:""
+            coment: "",
+            name: "",
+            icons: [
+                'mdi-home',
+            ],
         }
     },
     methods: {
-        onResize () {
+        onResize() {
             this.x = window.innerWidth
             this.y = window.innerHeight
         },
-        change:function(){
+        change: function () {
             this.overlay = !this.overlay
         },
-        getChats(){
+        getChats() {
             firebase.firestore().collection('room').doc('001').collection('comments').orderBy('createdAt', 'asc').get().then(async snapshot => {
-                    await snapshot.forEach(doc => {
+                await snapshot.forEach(doc => {
                     //contentは要素
                     //pushは配列データそのもの
                     // this.allData.push(doc.data().content)
                     this.chat_ire.push({
-                        content:doc.data().content,
-                        name:doc.data().name
+                        content: doc.data().content,
+                        name: doc.data().name
                     })
                 })
                 this.chat = this.chat_ire
                 this.chat_ire = []
             })
         },
-        send:function(){
+        send: function () {
             this.name = this.user_name
             firebase.firestore().collection('room').doc('001').collection('comments').add({
                 content: this.coment,
                 createdAt: new Date(),
-                name:this.name
+                name: this.name
             })
 
             this.chat.push({
-                content:this.coment,
-                name:this.name
+                content: this.coment,
+                name: this.name
             })
             this.coment = ""
         }
     },
     mounted() {
-        firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            // User logged in already or has just logged in.
-            // ユーザーIDの取得
-            // console.log(user.uid);
-            // this.user_id = user.uid
-            // ドキュメントIDをユーザIDとしているのでユーザIDを持ってきてそこからフィールド取り出し
+        firebase.firestore().collection('room').doc('001').collection('comments').onSnapshot(() => {
             this.getChats()
-        }
-      })
-        
+        })
     },
-    computed:{
-        user_id:{
-            get(){
+    computed: {
+        user_id: {
+            get() {
                 return this.$store.getters.user_id
             },
-            set(value){
-                return this.$store.commit('set_user_id',value)
+            set(value) {
+                return this.$store.commit('set_user_id', value)
             }
         },
-        user_name(){
+        user_name() {
             return this.$store.getters.user_fname
         },
     },

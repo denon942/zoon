@@ -1,156 +1,90 @@
 <template>
-    <v-container class="ma-0 pa-0" >
-        <v-layout class="ma-0 pa-0">
-            <v-flex xs12 lg12 >
-                <v-row justify="center" class="ma-0 pa-0">
-                    <v-col cols="auto" class="mx-12">
-                        <v-form v-model="valid">
-                            <v-row class="ma-0 pa-0">
-                                <v-col cols="6" lg="4">
-                                    <v-text-field
-                                        prepend-icon="mdi-account-circle"
-                                        v-model="firstname"
-                                        label="姓"
-                                        :rules="firstnameRules"/>
-                                </v-col>
-                                <v-col cols="6" lg="4">
-                                    <v-text-field
-                                        v-model="lastname"
-                                        label="名"
-                                        :rules="lastnameRules"/>
-                                </v-col>
-                            </v-row>
-                            <v-row class="ma-0 pa-0">
-                                <v-col cols="6" lg="4">
-                                    <v-text-field
-                                        prepend-icon="mdi-account-circle-outline"
-                                        v-model="firstkana"
-                                        label="セイ"
-                                        :rules="firstkanaRules"/>
-                                </v-col>
-                                <v-col cols="6" lg="4">
-                                    <v-text-field
-                                        v-model="lastkana"
-                                        label="メイ"
-                                        :rules="lastkanaRules"/>
-                                </v-col>
-                            </v-row>
-                            <v-row class="ma-0 pa-0">
-                                <v-col cols="12" lg="12">
-                                    <v-radio-group
-                                        prepend-icon="mdi-human-male-female"
-                                        v-model="sex" :mandatory="false" row>
-                                        <v-radio label="男性"/>
-                                        <v-radio label="女性"/>
-                                    </v-radio-group>
-                                </v-col>
-                            </v-row>
-                            <v-row class="ma-0 pa-0">
-                                <v-col :cols="birthCol" sm="4">
-                                    <v-select
-                                        v-model="birthValueYear"
-                                        :items="dropdown"
-                                        :rules="yearRules"
-                                        label="生年"/>
-                                </v-col>
-                                <v-col :cols="birthCol" sm="4">
-                                    <v-select
-                                        v-model="birthValueMonth"
-                                        :items="dropdown1"
-                                        :rules="monthRules"
-                                        label="月"/>
-                                </v-col>
-                                <v-col :cols="birthCol" sm="4">
-                                    <v-select
-                                        v-model="birthValueDay"
-                                        :items="dropdown2"
-                                        :rules="dayRules"
-                                        label="日"/>
-                                </v-col>
-                            </v-row>
-                            <v-row class="ma-0 pa-0">
-                                <v-col>
-                                    <v-text-field
-                                        prepend-icon="mdi-email"
-                                        v-model="email"
-                                        counter
-                                        label="メールアドレス"
-                                        :rules="emailRules"
-                                        hint="メールアドレスは50字以下で記入してください。"/>
-                                </v-col>
-                            </v-row>
-                            <v-row class="ma-0 pa-0">
-                                <v-col>
-                                    <v-text-field
-                                        v-model="passwd"
-                                        :type="showPassword ? 'text' : 'password'"
-                                        prepend-icon="mdi-lock-outline"
-                                        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                        @click:append="showPassword = !showPassword"
-                                        label="パスワード"
-                                        counter
-                                        hint="パスワードは8字以上20字以下にしてください。"
-                                        :rules="registpassRules"/>
-                                </v-col>
-                            </v-row>
-                            <v-row class="ma-0 pa-0">
-                                <v-col>
-                                    <v-text-field
-                                        v-model="againpasswd"
-                                        :type="showAgainPassword ? 'text' : 'password'" prepend-icon="mdi-lock"
-                                        :append-icon="showAgainPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                        @click:append="showAgainPassword = !showAgainPassword"
-                                        :rules="againpassRules"
-                                        counter
-                                        label="パスワード確認"
-                                        required/>
-                                </v-col>
-                            </v-row>
-                            <v-row class="ma-0 pa-0">
-                                <v-col cols="5" lg="5">
-                                    <v-text-field
-                                        v-model="post"
-                                        v-mask="POST"
-                                        prepend-icon="mdi-currency-kzt"
-                                        label="郵便番号"
-                                        :rules="postRules"/>
-                                </v-col>
-                            </v-row>
-                            <v-row class="ma-0 pa-0">
-                                <v-col>
-                                    <v-text-field
-                                        v-model="address"
-                                        prepend-icon="mdi-home"
-                                        label="住所"
-                                        :rules="addressRules"/>
-                                </v-col>
-                            </v-row>
-                            <v-row justify="center" align="center" class="ma-0 pa-0 mt-2">
-                                <v-btn
-                                    dark
-                                    style="background-color: #83B590"
-                                    outlined
-                                    rounded
-                                    :disabled="!valid"
-                                    color="blue"
-                                    class="mr-4 white--text mb-5"
-                                    @click="signUp"
-                                    width="120">
-                                    登録
-                                </v-btn>
-                            </v-row>
-                        </v-form>
-                    </v-col>
-                </v-row>
-            </v-flex>
-        </v-layout>
-    </v-container>
+<v-container class="ma-0 pa-0">
+    <v-layout class="ma-0 pa-0">
+        <v-flex xs12 lg12>
+            <v-row justify="center" class="ma-0 pa-0">
+                <v-col cols="auto" class="mx-12">
+                    <v-form v-model="valid">
+                        <v-row class="ma-0 pa-0">
+                            <v-col cols="6" lg="4">
+                                <v-text-field prepend-icon="mdi-account-circle" v-model="firstname" label="姓" :rules="firstnameRules" />
+                            </v-col>
+                            <v-col cols="6" lg="4">
+                                <v-text-field v-model="lastname" label="名" :rules="lastnameRules" />
+                            </v-col>
+                        </v-row>
+                        <v-row class="ma-0 pa-0">
+                            <v-col cols="6" lg="4">
+                                <v-text-field prepend-icon="mdi-account-circle-outline" v-model="firstkana" label="セイ" :rules="firstkanaRules" />
+                            </v-col>
+                            <v-col cols="6" lg="4">
+                                <v-text-field v-model="lastkana" label="メイ" :rules="lastkanaRules" />
+                            </v-col>
+                        </v-row>
+                        <v-row class="ma-0 pa-0">
+                            <v-col cols="12" lg="12">
+                                <v-radio-group prepend-icon="mdi-human-male-female" v-model="sex" :mandatory="false" row>
+                                    <v-radio label="男性" />
+                                    <v-radio label="女性" />
+                                </v-radio-group>
+                            </v-col>
+                        </v-row>
+                        <v-row class="ma-0 pa-0">
+                            <v-col :cols="birthCol" sm="4">
+                                <v-select v-model="birthValueYear" :items="dropdown" :rules="yearRules" label="生年" />
+                            </v-col>
+                            <v-col :cols="birthCol" sm="4">
+                                <v-select v-model="birthValueMonth" :items="dropdown1" :rules="monthRules" label="月" />
+                            </v-col>
+                            <v-col :cols="birthCol" sm="4">
+                                <v-select v-model="birthValueDay" :items="dropdown2" :rules="dayRules" label="日" />
+                            </v-col>
+                        </v-row>
+                        <v-row class="ma-0 pa-0">
+                            <v-col>
+                                <v-text-field prepend-icon="mdi-email" v-model="email" counter label="メールアドレス" :rules="emailRules" hint="メールアドレスは50字以下で記入してください。" />
+                            </v-col>
+                        </v-row>
+                        <v-row class="ma-0 pa-0">
+                            <v-col>
+                                <v-text-field v-model="passwd" :type="showPassword ? 'text' : 'password'" prepend-icon="mdi-lock-outline" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showPassword = !showPassword" label="パスワード" counter hint="パスワードは8字以上20字以下にしてください。" :rules="registpassRules" />
+                            </v-col>
+                        </v-row>
+                        <v-row class="ma-0 pa-0">
+                            <v-col>
+                                <v-text-field v-model="againpasswd" :type="showAgainPassword ? 'text' : 'password'" prepend-icon="mdi-lock" :append-icon="showAgainPassword ? 'mdi-eye' : 'mdi-eye-off'" @click:append="showAgainPassword = !showAgainPassword" :rules="againpassRules" counter label="パスワード確認" required />
+                            </v-col>
+                        </v-row>
+                        <v-row class="ma-0 pa-0">
+                            <v-col cols="5" lg="5">
+                                <v-text-field v-model="post" v-mask="POST" prepend-icon="mdi-currency-kzt" label="郵便番号" :rules="postRules" />
+                            </v-col>
+                        </v-row>
+                        <v-row class="ma-0 pa-0">
+                            <v-col>
+                                <v-text-field v-model="address" prepend-icon="mdi-home" label="住所" :rules="addressRules" />
+                            </v-col>
+                        </v-row>
+                        <v-row justify="center" align="center" class="ma-0 pa-0 mt-2">
+                            <v-btn dark style="background-color: #83B590" outlined rounded :disabled="!valid" color="blue" class="mr-4 white--text mb-5" @click="signUp" width="120">
+                                登録
+                            </v-btn>
+                        </v-row>
+                    </v-form>
+                </v-col>
+            </v-row>
+        </v-flex>
+    </v-layout>
+</v-container>
 </template>
+
 <script>
-const { mask } = require('vue-the-mask')
+const {
+    mask
+} = require('vue-the-mask')
 export default {
-    data(){
-        return{
+    data() {
+        return {
             POST: '###-####',
             TEL: '###-####-####',
             array: {},
@@ -163,13 +97,13 @@ export default {
             // パスワード確認
             againpasswd: '',
             // 姓
-            firstname:'',
+            firstname: '',
             // 名
-            lastname:'',
+            lastname: '',
             // セイ
-            firstkana:'',
+            firstkana: '',
             // メイ
-            lastkana:'',
+            lastkana: '',
             // 性別
             sex: '',
             // 誕生日
@@ -184,25 +118,25 @@ export default {
             // 住所
             address: '',
             // 電話番号
-            tel:'',
+            tel: '',
             // クレジットカード
             card: '',
             // セキュリティコード
-            secu:'',
+            secu: '',
             // 名義
-            meigi:'',
+            meigi: '',
             // 年
-            isYear:2020,
-            year:[2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030],
+            isYear: 2020,
+            year: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030],
             // 月
-            isMonth:1,
-            month:[1,2,3,4,5,6,7,8,9,10,11,12],
+            isMonth: 1,
+            month: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
             valid: true,
-            showPassword:false,
-            showAgainPassword:false,
-            x:window.innerWidth,
-            y:window.innerHeight,
-            birthCol:'',
+            showPassword: false,
+            showAgainPassword: false,
+            x: window.innerWidth,
+            y: window.innerHeight,
+            birthCol: '',
             // メールアドレスの登録
             registemailRules: [
                 v => !!v || '入力欄が空白です。',
@@ -211,30 +145,30 @@ export default {
                 v => /^\S+@\S+\.\S+$/.test(v) || '想定していない文字形式で入力されました。'
             ],
             // パスワードの登録
-            registpassRules:[
+            registpassRules: [
                 v => !!v || '入力欄が空白です。',
-                v => (v&& 8<=v.length) || '',
-                v => (v&& v.length<=20) || '有効桁を超えた不正な値が入力されました。',
+                v => (v && 8 <= v.length) || '',
+                v => (v && v.length <= 20) || '有効桁を超えた不正な値が入力されました。',
                 v => /[a-zA-Z\d]$/.test(v) || '半角英数字のみで入力してください。'
             ],
             // パスワード再入力
-            againpassRules:[
-                v => (v&& v.length<=20) || '有効桁を超えた不正な値が入力されました。',
-                v => (v&& v === this.passwd) || 'パスワードが一致していません。',
+            againpassRules: [
+                v => (v && v.length <= 20) || '有効桁を超えた不正な値が入力されました。',
+                v => (v && v === this.passwd) || 'パスワードが一致していません。',
             ],
             // 姓名
             firstnameRules: [
                 v => !!v || '入力欄が空白です。',
                 v => /^[a-zA-Zａ-ｚＡ-Ｚぁ-んァ-ン一-龥]+$/.test(v) || '使用できない文字が含まれています。'
             ],
-            lastnameRules:[
+            lastnameRules: [
                 v => !!v || '入力欄が空白です。',
                 v => /^[a-zA-Zａ-ｚＡ-Ｚぁ-んァ-ン一-龥]+$/.test(v) || '使用できない文字が含まれています。'
             ],
             //セイメイ
             firstkanaRules: [
                 v => !!v || '入力欄が空白です。',
-                v => /[ァ-ヴ]$/.test(v)  ||'カタカナで入力してください。'
+                v => /[ァ-ヴ]$/.test(v) || 'カタカナで入力してください。'
             ],
             // 誕生日
             lastkanaRules: [
@@ -271,32 +205,29 @@ export default {
                 v => !!v || '入力欄が空白です。',
                 v => /.+@.+\..+/.test(v) || 'メールアドレスの入力形式が異なっています。',
                 v => (v && v.length <= 50) || '50字以内で入力してください。',
-                v => /[a-zA-Z\d]$/.test(v) ||'半角英数字のみで入力してください。'
+                v => /[a-zA-Z\d]$/.test(v) || '半角英数字のみで入力してください。'
             ],
-            
+
         }
     },
-    mounted () {
-      this.onResize
+    mounted() {
+        this.onResize
     },
-    watch:{
-        x:function(){
-            if(this.x<=400)
-            {
+    watch: {
+        x: function () {
+            if (this.x <= 400) {
                 this.birthCol = '12'
-            }
-            else
-            {
+            } else {
                 this.birthCol = '4'
             }
         }
     },
     methods: {
-        onResize () {
+        onResize() {
             this.x = window.innerWidth
             this.y = window.innerHeight
         },
-        signUp:async function(){
+        signUp: async function () {
             this.array['flg'] = true
             // ユーザアイコン(初期値)
             this.array['user_image'] = this.user_image
@@ -322,7 +253,7 @@ export default {
             this.array['post'] = this.post
             // 住所
             this.array['address'] = this.address
-            await this.$store.commit('registUser',this.array)
+            await this.$store.commit('registUser', this.array)
         }
     },
     created() {
